@@ -30,7 +30,8 @@ namespace DFS
         public static UserUtility UI = new UserUtility();
         public static void Main(string[] args)
         {
-            string path = ".//..//..//..//";
+            //string path = ".//..//..//..//"; 
+            Console.WriteLine("Hello World!");
             String[] options = { "1) Read DFSM", "2) Read Input Strings", "3) Minimize", "4) Exit" };
             Boolean repeat = true;
             string line_buffer; 
@@ -56,8 +57,9 @@ namespace DFS
                 else if (line_buffer.StartsWith("3"))
                 {
                     Console.WriteLine("You have chosen option 3.");
-                    Console.WriteLine("Minimizing....");
-                    Console.WriteLine("Error, unable to minimize. Something went wrong.");
+                    Console.WriteLine("Please enter the name of input file:");
+                    minimize(machine);
+                    //Console.WriteLine("Error, unable to minimize. Something went wrong.");
                 }
                 else
                 {
@@ -114,7 +116,7 @@ namespace DFS
             }
             line_buffer = sr.ReadLine();
             Accepting_States = line_buffer.Split(' ');
-            string start, letter, next;
+            //string start, letter, next;
             string[] start_array = new string[num_transitions];
             char[] letter_array = new char[num_transitions];
             string[] next_array = new string[num_transitions];
@@ -125,7 +127,7 @@ namespace DFS
                 char[] char_buffer = arraybuffer[1].ToCharArray();
                 start_array[i] = arraybuffer[0]; letter_array[i] = char_buffer[0]; next_array[i] = arraybuffer[2];
             }
-            String transition_state = "new Transition(\"q0\", '0', \"q0\")";
+            //String transition_state = "new Transition(\"q0\", '0', \"q0\")";
             #endregion
             List<String> Q_States; List<char> Alpha; List<Transition> Trans_Delta;
             //States_Array
@@ -168,6 +170,19 @@ namespace DFS
             for (int a = 0; a < j; a++)
             {
                 passedFSM.Check(input_buff[a]);
+            }
+        }
+        public static void minimize(FSM themachine)
+        {
+            Boolean redun = false;
+            if (redun)
+            {
+                themachine.checkRedundantState();
+                Console.WriteLine("Ok, done.");
+            }
+            else
+            {
+                Console.WriteLine("Reject, Unable to Minimize further.");
             }
         }
     }

@@ -20,6 +20,8 @@ namespace DFS
         private string accepted_states;
         private readonly List<string> Final_States = new List<string>();
         public UserUtility UI;
+        private List<string> Group_A = new List<string>();
+        private List<string> Group_B = new List<string>();
 
         /**
          * 
@@ -78,11 +80,44 @@ namespace DFS
         /**validating the final state
          * **/
         private void AddFinalStates(IEnumerable<string> finalStates){
-            foreach (var finalState in finalStates.Where(finalState => States.Contains(finalState))){
+            foreach (string finalState in finalStates.Where(finalState => States.Contains(finalState))){
             Final_States.Add(finalState);
             }
         }
 
+        public void addToGroup()
+        {
+            foreach (string acceptingStates in Final_States)
+            {
+                Group_A.Add(acceptingStates);
+            }
+            foreach (string rejectingState in States)
+            {
+                Group_B.Where(g => !Final_States.Any());
+            }
+            //Transition transition = Transitions.Find(t => t.StartState == currentState && t.Symbol == symbol);
+        }
+
+        public void checkRedundantState()
+        {
+            List<string> Groups = new List<string>();
+            foreach(string accepted_state in Group_A){
+                Console.WriteLine(accepted_state);
+            }
+            foreach (string non_state in Group_B)
+            {
+                Console.WriteLine(non_state);
+            }
+            foreach (string a in Group_A)
+            {
+                //find out which groups the inputs lead to
+                //Transition transition = Transitions.Find(t => t.StartState == currentState && t.Symbol == symbol);
+            }
+            foreach (string b in Group_B)
+            {
+
+            }
+        }
         /** Methods that validate the string if it's in the alphabet  **/
         /**
          * The check method is
@@ -97,7 +132,7 @@ namespace DFS
             var currentState = accepted_states;
             var steps = new StringBuilder();
             foreach (var symbol in input.ToCharArray()){
-            var transition = Transitions.Find(t => t.StartState == currentState &&
+            Transition transition = Transitions.Find(t => t.StartState == currentState &&
                                                 t.Symbol == symbol);
             if (transition == null){
                 UI.FailMessage("No transitions for current state and symbol");
