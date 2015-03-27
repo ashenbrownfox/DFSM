@@ -174,6 +174,7 @@ namespace DFS
         }
         public static void minimize(FSM themachine)
         {
+            //minization is temporarily disabled
             Boolean redun = false;
             if (redun)
             {
