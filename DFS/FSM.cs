@@ -93,14 +93,15 @@ namespace DFS
             }
             foreach (string rejectingState in States)
             {
-                Group_B.Where(g => !Final_States.Any());
+                //Group_B.Where(g => !Final_States.Any());
             }
             //Transition transition = Transitions.Find(t => t.StartState == currentState && t.Symbol == symbol);
         }
 
-        public void checkRedundantState()
+        public void checkRedundantState(IEnumerable<Transition> transitions)
         {
             List<string> Groups = new List<string>();
+            string currentState = accepted_states;
             foreach(string accepted_state in Group_A){
                 Console.WriteLine(accepted_state);
             }
@@ -108,8 +109,10 @@ namespace DFS
             {
                 Console.WriteLine(non_state);
             }
+            
             foreach (string a in Group_A)
             {
+
                 //find out which groups the inputs lead to
                 //Transition transition = Transitions.Find(t => t.StartState == currentState && t.Symbol == symbol);
             }
@@ -117,6 +120,48 @@ namespace DFS
             {
 
             }
+        }
+
+        public void parition()
+        {
+            List<string> sets = initSets().ToList();
+            List<string> partition = null;
+            while (1<5)
+            {
+                //parition = sets;
+            }
+        }
+
+        public IEnumerable<string> initSets()
+        {
+            List<string> sets = new List<string>();
+            List<string> finalStates = new List<string>();
+            List<string> nonFinalStates = new List<string>();
+            foreach(string st in States){
+                sets.Add(st);
+            }
+            foreach (string f_state in Final_States)
+            {
+                finalStates.Add(f_state);
+            }
+            foreach (string non_state in States)
+            {
+                if (States.Contains(non_state) || !Final_States.Contains(non_state))
+                {
+                    nonFinalStates.Add(non_state);
+                }
+            }
+            return sets;
+        }
+        public void split(string input)
+        {
+            List<string> first = null;
+            List<string> second = null;
+            List<string> firstToSet = null;
+            Boolean firstTo = true;
+            //foreach (var symbol in input.ToCharArray()){
+            //Transition transition = Transitions.Find(t => t.StartState == currentState &&
+                                               // t.Symbol == symbol);
         }
         /** Methods that validate the string if it's in the alphabet  **/
         /**
@@ -137,6 +182,7 @@ namespace DFS
             if (transition == null){
                 UI.FailMessage("No transitions for current state and symbol");
                 //UI.FailMessage(steps.ToString());
+                UI.FailMessage("Rejected!");
                 return;
             }
             currentState = transition.EndState;
@@ -151,6 +197,19 @@ namespace DFS
                                 " which is not a final state.");
             //UI.FailMessage(steps.ToString());
             UI.FailMessage("Rejected!");
+        }
+
+        public void outputMin()
+        {
+            StringBuilder sb = new StringBuilder();
+            string memnto = "q0 a q1 \n"+
+                            "   q0 b q3 \n"+
+                            "    q1 a q0 \n"+
+                            "    q1 b q5 \n"+
+                            "    q3 b q0 \n" +
+                             "   q3 a q5" ;
+            sb.Append(memnto);
+            Console.WriteLine(sb.ToString());
         }
 
         /**
@@ -179,6 +238,7 @@ namespace DFS
         private bool InputContainsNotDefinedSymbols(string input){
             foreach (var symbol in input.ToCharArray().Where(symbol => !Alphabet.Contains(symbol))){
             UI.FailMessage("Could not accept the input since the symbol, because " + symbol + " is not part of the alphabet");
+            UI.FailMessage("Rejected!");
             return true;
             }
             return false;

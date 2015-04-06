@@ -57,7 +57,6 @@ namespace DFS
                 else if (line_buffer.StartsWith("3"))
                 {
                     Console.WriteLine("You have chosen option 3.");
-                    Console.WriteLine("Please enter the name of input file:");
                     minimize(machine);
                     //Console.WriteLine("Error, unable to minimize. Something went wrong.");
                 }
@@ -174,17 +173,24 @@ namespace DFS
         }
         public static void minimize(FSM themachine)
         {
-            //minization is temporarily disabled
+            FileStream test = new FileStream(".//..//..//..//" + "output.txt", FileMode.Truncate, FileAccess.Write);
+            StreamWriter output = new StreamWriter(test);
+            output.WriteLine("This is a sample output file.");
+            output.Write("Word ");
+            output.WriteLine("word 2");
+            output.WriteLine("Line");
             Boolean redun = false;
             if (redun)
             {
-                themachine.checkRedundantState();
-                Console.WriteLine("Ok, done.");
+                //themachine.checkRedundantState();
+                Console.WriteLine("Done.");
             }
             else
             {
-                Console.WriteLine("Reject, Unable to Minimize further.");
+                Console.WriteLine("Done..");
             }
+            themachine.outputMin();
+            output.Flush();
         }
     }
 }
