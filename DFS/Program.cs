@@ -30,14 +30,14 @@ namespace DFS
         public static UserUtility UI = new UserUtility();
         public static void Main(string[] args)
         {
-            //string path = ".//..//..//..//"; 
             Console.WriteLine("Hello World!");
-            String[] options = { "1) Read DFSM", "2) Read Input Strings", "3) Minimize", "4) Exit" };
+            String[] options = { "1) Read DFSM", "2) Read Input Strings(default: input.txt)", "3) Minimize", "4) Exit" };
             Boolean repeat = true;
             string line_buffer; 
-            //string Start_State = ""; int num_states = 0, num_alphabet = 0, num_accepting_states = 0, num_transitions = 0;
             string[] arraybuffer = new string[1000];
-            FSM machine = null;//it's null until you load a DFSM from text file
+            FSM machine = null;
+            
+            //Keep asking the user what to do until the user chooses to exit
             while (repeat)
             {
                 Console.WriteLine("Please select an option.");
@@ -46,19 +46,33 @@ namespace DFS
                 if (line_buffer.StartsWith("1"))
                 {
                     Console.WriteLine("You have chosen option 1. ");
-                    machine = loadDFSM();
+                    try
+                    {
+                        machine = loadDFSM();
+                    }
+                    catch (Exception ex)
+                    {
+                        UI.FailMessage("Error, the input file either could not be found or is incorrect."+ex);
+                    }
                 }
                 else if (line_buffer.StartsWith("2"))
                 {
-                    Console.WriteLine("You have chosen option 2.");
-                    Console.WriteLine("Please enter the name of the input file(default is input.txt):");
-                    simulate("input.txt", machine);
+                    if (machine == null)
+                    {
+                        UI.FailMessage("Sorry, no DFSM file was loaded. Try loading one first before proceding.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("You have chosen option 2.");
+                        Console.WriteLine("Please enter the name of the input file(default is input.txt):");
+                        simulate("input.txt", machine);
+                    }
                 }
                 else if (line_buffer.StartsWith("3"))
                 {
                     Console.WriteLine("You have chosen option 3.");
-                    minimize(machine);
-                    //Console.WriteLine("Error, unable to minimize. Something went wrong.");
+                    //minimize(machine);
+                    Console.WriteLine("Unable to Minimize. No file found.");
                 }
                 else
                 {
